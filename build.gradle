@@ -1,0 +1,168 @@
+buildscript {
+	repositories {
+        mavenCentral()
+	}
+	dependencies {
+		classpath 'io.github.fvarrui:javapackager:1.4.2'
+	}
+}
+
+plugins {
+    id 'java'
+    id 'maven-publish'
+	id 'application'
+	id 'org.openjfx.javafxplugin' version '0.0.9'
+//	id 'org.javamodularity.moduleplugin' version '1.7.0' apply false
+}
+//mainClassName = 'com.isikhaluk.datalogger.Main'
+apply plugin: 'io.github.fvarrui.javapackager.plugin'
+
+dependencies {
+    implementation 'commons-io:commons-io:2.6'
+	compile group: 'org.scream3r', name: 'jssc', version: '2.8.0'
+	// https://mvnrepository.com/artifact/org.apache.poi/poi
+	compile group: 'org.apache.poi', name: 'poi', version: '4.1.2'
+	// https://mvnrepository.com/artifact/org.apache.poi/poi-ooxml
+	compile group: 'org.apache.poi', name: 'poi-ooxml', version: '4.1.2'
+	// https://mvnrepository.com/artifact/org.jetbrains.kotlin/kotlin-stdlib
+	compile group: 'org.jetbrains.kotlin', name: 'kotlin-stdlib', version: '1.3.71'
+	// https://mvnrepository.com/artifact/org.apache.commons/commons-lang3
+	compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.11'
+	// NSMenuFX
+	compile "de.jangassen:nsmenufx:3.0.2"
+	// https://mvnrepository.com/artifact/net.java.dev.jna/jna
+	compile group: 'net.java.dev.jna', name: 'jna', version: '5.6.0'
+}
+//java.sourceSets["main"].java {
+//	srcDir("src/main/java")
+//}
+
+//subprojects {
+//	apply plugin: 'groovy'
+//	apply plugin: 'org.javamodularity.moduleplugin'
+//	plugins.withType(JavaPlugin).configureEach {
+//		java {
+//			modularity.inferModulePath = true
+//			sourceCompatibility = JavaVersion.VERSION_11
+//			targetCompatibility = JavaVersion.VERSION_11
+//		}
+//	}
+//}
+//compileJava {
+//	moduleOptions {
+//		addModules = ['com.isikhaluk.datalogger']
+//	}
+//}
+//compileJava {
+//	doFirst {
+//		options.compilerArgs = [
+//				'--module-path', classpath.asPath,
+//				'--add-modules', 'javafx.controls,javafx.fxml,javafx.graphics,javafx.media'
+//		]
+//		println options.compilerArgs
+//	}
+//	doFirst {
+//		options.compilerArgs = [
+//				'--module-path', classpath.asPath,
+//				'--patch-module', "$moduleName="
+//						+ files(sourceSets.main.resources.srcDirs).asPath,
+//				'--module-version', "$moduleVersion"
+//		]
+//		classpath = files()
+//	}
+//	sourceCompatibility = '11'
+//	targetCompatibility = '11'
+//}
+
+//compileJava {
+//	inputs.property("moduleName", moduleName)
+//	doFirst {
+//		options.compilerArgs = [
+//				'--module-path', classpath.asPath,
+//				'--add-modules', 'javafx.controls',
+//				'--add-modules', 'javafx.fxml',
+//				'--add-modules', 'java.prefs',
+//				'--add-modules', 'jssc',
+//				'--add-modules', 'nsmenufx',
+//				'--add-modules', 'org.apache.commons.lang3',
+//				'--add-modules', 'java.desktop',
+//				'--add-modules', 'poi.ooxml',
+//				'--add-modules', 'poi'
+//		]
+//		println options.compilerArgs
+//		classpath = files()
+//	}
+//	sourceCompatibility = '11'
+//	targetCompatibility = '11'
+//}
+//application {
+//	mainModule = 'com.isikhaluk.datalogger' // name defined in module-info.java
+//	mainClassName = 'com.isikhaluk.datalogger.Main'
+//	// DO NOT USE   mainClassName = 'org.gradle.sample.Main'
+//}
+javafx {
+	modules = [ 'javafx.controls', 'javafx.fxml' ]
+	version = '15.0.1'
+}
+//group = 'io.github.fvarrui'
+group = 'com.isikhaluk'
+version = '1.0.0'
+description = 'Datalogger for Geotechical Testing'
+//sourceCompatibility = '11'
+sourceCompatibility = '8'
+targetCompatibility = '8'
+compileJava.options.encoding = 'UTF-8'
+
+javapackager {
+	mainClass = 'com.isikhaluk.datalogger.Launcher'
+	mainClassName = 'com.isikhaluk.datalogger.Launcher'
+//	mainModule = 'com.isikhaluk.datalogger'
+	additionalResources = [ file('src/main/resources/info.txt') ]
+	bundleJre = false
+	generateInstaller = false
+	jreMinVersion = '1.8.0'
+//	jdkPath = file('/Library/Java/JavaVirtualMachines/jdk-15.0.1.jdk/Contents/Home')
+//	jdkPath = file('/Library/Java/JavaVirtualMachines/jdk1.8.0_111.jdk/Contents/Home')
+//	jdkPath = file('/Users/aurelius/Documents/Developer/jdk-win--15.0.1')
+}
+
+//task packageForWin2(type: io.github.fvarrui.javapackager.gradle.PackageTask, dependsOn: build) {
+//	// mandatory
+//	mainClass = 'com.isikhaluk.datalogger.Main'
+//	// optional
+//	bundleJre = true
+//	generateInstaller = true
+//	administratorRequired = false
+//	platform = win
+//	additionalResources = [ file('src/main/resources/info.txt') ]
+//
+//}
+
+task packageForWindows(type: io.github.fvarrui.javapackager.gradle.PackageTask, dependsOn: build) {
+	description = 'Packages the application as a native Windows executable and bundles it in a zipball'
+	platform = 'windows'
+	createZipball = false
+//	jdkPath = file('/Users/aurelius/Documents/Developer/javafx-sdk-15.0.1/lib/')
+}
+
+task packageForLinux(type: io.github.fvarrui.javapackager.gradle.PackageTask, dependsOn: build) {
+	description = 'Packages the application as a native GNU/Linux executable and bundles it in a tarball'
+	platform = 'linux'
+	createTarball = false
+}
+
+task packageForMac(type: io.github.fvarrui.javapackager.gradle.PackageTask, dependsOn: build) {
+	description = 'Packages the application as a native Mac OS app and bundles it in a tarball'
+	platform = 'mac'
+	createTarball = false
+}
+
+task packageForAllPlatforms(dependsOn: [ packageForWindows, packageForMac, packageForLinux ]) {
+	description = 'Packages the application for all platforms'
+	group = 'JavaPackager'
+}
+
+// at compile time, put resources in same directories as classes
+sourceSets {
+	main.output.resourcesDir = main.java.outputDir
+}

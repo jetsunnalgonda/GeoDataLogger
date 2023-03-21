@@ -1,0 +1,54 @@
+.chart-plot-background {
+    -fx-background-color: #e2ecfe;
+}
+.chart-vertical-grid-lines {
+    -fx-stroke: rgba(50, 120, 250, 0.5);
+}
+.chart-horizontal-grid-lines {
+    -fx-stroke: rgba(50, 120, 250, 0.5);
+}
+.chart-alternative-row-fill {
+    -fx-fill: #edf0f8;
+    -fx-stroke: transparent;
+    -fx-stroke-width: 0;
+}
+
+.axis {
+    -fx-font-size: 1em;
+    -fx-tick-label-fill: #001391;
+    -fx-font-family: Tahoma;
+    -fx-tick-length: 15;
+    -fx-minor-tick-length: 10;
+}
+
+.axis-label {
+    -fx-text-fill: #001391;
+}
+
+/*.axis-tick-mark {*/
+/*    -fx-fill: #666666;*/
+/*    -fx-stroke: #123456;*/
+/*}*/
+
+/*.axis-minor-tick-mark {*/
+/*    -fx-fill: #914800;*/
+/*    -fx-stroke: #AAAAAA;*/
+/*}*/
+
+.chart-line-symbol {
+    -fx-background-color: #ff2200, #ff2200;
+    -fx-background-insets: 0, 2;
+    -fx-background-radius: 3px;
+    -fx-padding: 1px;
+}
+.chart-series-line {
+    -fx-stroke: #ff2200;
+    -fx-stroke-width: 3px;
+    -fx-effect: dropshadow( two-pass-box , rgba(0,0,0,0.3) , 8, 0.0 , 0 , 3 );
+}
+#connected.label {
+    -fx-background-color: #5cff2f;
+}
+#notConnected.label {
+    -fx-background-color: none;
+}

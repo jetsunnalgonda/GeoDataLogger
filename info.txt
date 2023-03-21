@@ -1,0 +1,3 @@
+This is a data logger program to be used for Geotechnical engineering laboratory tests.
+Programmed by Haluk Isik.
+2020
